@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TransparentWindow : MonoBehaviour
@@ -46,12 +47,16 @@ public class TransparentWindow : MonoBehaviour
 
     const int SPI_GETWORKAREA = 0x0030;
 
+    const uint SWP_NOMOVE = 0x0002;
+    const uint SWP_NOSIZE = 0x0001;
+
     static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
 
     IntPtr hWnd;
+
     private void Start()
     {
-//#if !UNITY_EDITOR
+#if !UNITY_EDITOR
         hWnd = GetActiveWindow();
 
         MARGINS margins = new MARGINS { cxLeftWidth = -1 };
@@ -66,7 +71,7 @@ public class TransparentWindow : MonoBehaviour
         int height = workArea.bottom - workArea.top;
 
         SetWindowPos(hWnd, HWND_TOPMOST, workArea.left, workArea.top, width, height, 0);
-//#endif
+#endif
     }
 
     private void Update()
@@ -74,6 +79,8 @@ public class TransparentWindow : MonoBehaviour
         UnityEngine.Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
         SetClickthrough(Physics2D.OverlapPoint(worldPos) == null);
+
+        EnsureTopMost();
     }
 
     private void SetClickthrough(bool clickthrough)
@@ -86,5 +93,12 @@ public class TransparentWindow : MonoBehaviour
         {
             SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
         }
+    }
+
+    private void EnsureTopMost()
+    {
+#if !UNITY_EDITOR
+        SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+#endif
     }
 }
