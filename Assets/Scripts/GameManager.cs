@@ -36,4 +36,9 @@ public class GameManager : MonoBehaviour
     {
         BuildingClicked?.Invoke(this, args);
     }
+
+    public void OnPullClicked(object sender, System.EventArgs args)
+    {
+        Debug.Log("PULLING RAHHH");
+    }
 }

@@ -1,24 +1,16 @@
 using System;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement : BuildingButtons
 {
-
-    [SerializeField]
-    private SpriteRenderer spriteRenderer;
-    [SerializeField]
-    private BoxCollider2D boxCollider2D;
-    void Awake()
+    protected override void Awake()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
-        spriteRenderer.enabled = false;
-        boxCollider2D.enabled = false;
+        base.Awake();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
-        GameManager.Instance.BuildingClicked += EnableOrDisableMovement;
-        GameManager.Instance.RemoveBuildingIcons += RemoveMovement; 
+        base.Start();
     }
 
     // Update is called once per frame
@@ -40,34 +32,5 @@ public class Movement : MonoBehaviour
         //this is to prevent overlapping dragging.
         worldPos.z = 0;
         transform.position = worldPos;
-    }
-
-    private void EnableOrDisableMovement(object sender, OnClickedArgs args)
-    {
-        if (GetComponentInChildren<Click>(true) == args.WhoGotClicked)
-        {
-            EnableMovement();
-        }
-        else
-        {
-            DisableMovement();
-        }
-    }
-
-    private void RemoveMovement(object sender, System.EventArgs e)
-    {
-        DisableMovement();
-    }
-
-    private void EnableMovement()
-    {
-        spriteRenderer.enabled = true;
-        boxCollider2D.enabled = true;
-    }
-
-    private void DisableMovement()
-    {
-        spriteRenderer.enabled = false;
-        boxCollider2D.enabled = false;
     }
 }

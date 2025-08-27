@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class Click : MonoBehaviour
+public class ClickBuilding : MonoBehaviour
 {
-    private static Click clickable = null;
+    private static ClickBuilding clickable = null;
 
     public event EventHandler<OnClickedArgs> OnClicked;
 
@@ -42,5 +42,5 @@ public class Click : MonoBehaviour
 
 public class OnClickedArgs : EventArgs
 {
-    public Click WhoGotClicked;
+    public ClickBuilding WhoGotClicked;
 }
