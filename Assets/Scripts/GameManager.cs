@@ -1,8 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //this textmeshpro variable is just for testing purpose
+    [SerializeField]
+    private TMP_Text textMeshProGui;
     public static GameManager Instance { get; private set; }
 
     public event EventHandler<OnClickedArgs> BuildingClicked;
@@ -47,5 +51,6 @@ public class GameManager : MonoBehaviour
     public void OnCharacterPulled(object sender, PulledCharacterArgs args)
     {
         Debug.Log("Just pulled: " + args.pulledCharacter.rarity + args.pulledCharacter.name);
+        textMeshProGui.text = "Just pulled: " + args.pulledCharacter.rarity + args.pulledCharacter.name;
     }
 }
