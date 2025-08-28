@@ -22,6 +22,12 @@ public class BuildingButtons : MonoBehaviour
         GameManager.Instance.RemoveBuildingIcons += RemoveButton;
     }
 
+    protected virtual void OnDestroy()
+    {
+        GameManager.Instance.BuildingClicked -= EnableOrDisableButton;
+        GameManager.Instance.RemoveBuildingIcons -= RemoveButton;
+    }
+
     // Update is called once per frame
     void Update()
     {

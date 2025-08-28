@@ -13,6 +13,12 @@ public class Movement : BuildingButtons
         base.Start();
     }
 
+    protected override void OnDestroy()
+    {
+        if (GameManager.Instance == null) return;
+        base.OnDestroy();
+    }
+
     // Update is called once per frame
     void Update()
     {

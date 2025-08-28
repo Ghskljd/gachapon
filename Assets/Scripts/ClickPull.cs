@@ -15,6 +15,13 @@ public class ClickPull : BuildingButtons
         PullClicked += GameManager.Instance.OnPullClicked;
     }
 
+    protected override void OnDestroy()
+    {
+        if (GameManager.Instance == null) return;
+        base.OnDestroy();
+        PullClicked -= GameManager.Instance.OnPullClicked;
+    }
+
     // Update is called once per frame
     void Update()
     {

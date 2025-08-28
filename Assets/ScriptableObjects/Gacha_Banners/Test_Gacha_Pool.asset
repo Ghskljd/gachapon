@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b27dea21d1b1a4189b7f082781fd9a, type: 3}
+  m_Name: Test_Gacha_Pool
+  m_EditorClassIdentifier: 
+  Common_Characters_SOs:
+  - {fileID: 11400000, guid: 52d9092ffd5657c47ab11f01d36af467, type: 2}
+  Uncommon_Characters_SOs:
+  - {fileID: 11400000, guid: a69365ea7f2c17443bfcd95a87165fba, type: 2}
+  Rare_Characters_SOs:
+  - {fileID: 11400000, guid: 33a55e1a31a75424bbbe79f3b90cbdba, type: 2}
+  Ultra_Rare_Characters_SOs:
+  - {fileID: 11400000, guid: d375fc83f1ff21945b5bc3bc9e1b70ba, type: 2}
+  Unicorn_Rare_Characters_SOs:
+  - {fileID: 11400000, guid: 9b782f81389a4d1418c81838a7c34f2a, type: 2}
+  Burnt_Rare_Characters_SOs:
+  - {fileID: 11400000, guid: 6df2814ee900e124caeef7da72fa9da4, type: 2}

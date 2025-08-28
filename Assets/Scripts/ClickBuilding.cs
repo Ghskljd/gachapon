@@ -13,6 +13,12 @@ public class ClickBuilding : MonoBehaviour
         OnClicked += GameManager.Instance.OnClickedBuilding;
     }
 
+    void OnDestroy()
+    {
+        if (GameManager.Instance == null) return;
+        OnClicked -= GameManager.Instance.OnClickedBuilding;
+    }
+
     // Update is called once per frame
     void Update()
     {

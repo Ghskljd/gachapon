@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public event EventHandler<OnClickedArgs> BuildingClicked;
     public event EventHandler RemoveBuildingIcons;
+    public event EventHandler PullClicked;
 
     void Awake()
     {
@@ -39,6 +40,12 @@ public class GameManager : MonoBehaviour
 
     public void OnPullClicked(object sender, System.EventArgs args)
     {
-        Debug.Log("PULLING RAHHH");
+        //check if they have enough currency first
+        PullClicked?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnCharacterPulled(object sender, PulledCharacterArgs args)
+    {
+        Debug.Log("Just pulled: " + args.pulledCharacter.rarity + args.pulledCharacter.name);
     }
 }
