@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37a47e249eb7b5441aee17f1c62ff76a, type: 3}
   m_Name: Ultra_Rare_Test
   m_EditorClassIdentifier: 
+  ID: cb00df3d-6223-43e5-9519-6d96ddf9f8e3
   rarity: 3
   Name: Ultra Rare Character
   sprite: {fileID: 0}
+  unlocked: 0

@@ -52,5 +52,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Just pulled: " + args.pulledCharacter.rarity + args.pulledCharacter.name);
         textMeshProGui.text = "Just pulled: " + args.pulledCharacter.rarity + args.pulledCharacter.name;
+
+        CharacterListManager.Instance.AddToPlayerCollection(args.pulledCharacter);
     }
 }

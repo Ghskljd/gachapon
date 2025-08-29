@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37a47e249eb7b5441aee17f1c62ff76a, type: 3}
   m_Name: Ryan
   m_EditorClassIdentifier: 
+  ID: 28d5ef6d-471e-41c5-b55a-3c369e771026
   rarity: 4
   Name: Ryan
   sprite: {fileID: 0}
+  unlocked: 0

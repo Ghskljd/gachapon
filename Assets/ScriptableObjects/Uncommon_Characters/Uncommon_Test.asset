@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37a47e249eb7b5441aee17f1c62ff76a, type: 3}
   m_Name: Uncommon_Test
   m_EditorClassIdentifier: 
+  ID: 196a9b98-cc73-4d3a-ab0c-ca8f440e946f
   rarity: 1
   Name: Uncommon Character
   sprite: {fileID: 0}
+  unlocked: 1
