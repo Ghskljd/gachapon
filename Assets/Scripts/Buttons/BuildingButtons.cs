@@ -57,7 +57,7 @@ public class BuildingButtons : MonoBehaviour
         Collider.enabled = true;
     }
 
-    private void DisableButton()
+    protected virtual void DisableButton()
     {
         spriteRenderer.enabled = false;
         Collider.enabled = false;

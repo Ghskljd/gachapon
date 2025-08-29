@@ -12,7 +12,7 @@ public class CharacterListManager : MonoBehaviour
 
     [SerializeField]
     private List<Characters_SO> AllCharacters_SO;
-    private Dictionary<Characters_SO, int> PlayerCollection;
+    public Dictionary<Characters_SO, int> PlayerCollection { get; private set; }
 
     void Awake()
     {
