@@ -34,7 +34,7 @@ public static class SaveSystem
                 Debug.Log("Save file is empty, returning empty dictionary");
                 return new Dictionary<Characters_SO, int>();
             }
-            
+
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
@@ -55,8 +55,52 @@ public static class SaveSystem
         }
     }
 
+    public static void SaveCurrency(int currency)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = getCurrencyDataPath();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        CurrencyData currencyData = new CurrencyData(currency);
+
+        formatter.Serialize(stream, currencyData);
+        stream.Close();
+    }
+
+    public static int? loadCurrency()
+    {
+        string path = getCurrencyDataPath();
+        if (File.Exists(path))
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            if (fileInfo.Length == 0)
+            {
+                Debug.Log("Save file is empty, returning empty dictionary");
+                return null;
+            }
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            CurrencyData data = (CurrencyData)formatter.Deserialize(stream);
+            stream.Close();
+
+            return data.getCurrencyData();
+        }
+        else
+        {
+            Debug.Log("Save file not found in " + path);
+            return null;
+        }
+    }
+
     private static string getCharacterDataPath()
     {
         return Application.persistentDataPath + "/characters.data";
+    }
+
+    private static string getCurrencyDataPath()
+    {
+        return Application.persistentDataPath + "/currency.data";
     }
 }
