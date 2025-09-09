@@ -16,4 +16,4 @@ MonoBehaviour:
   rarity: 5
   Name: Burnt Character
   sprite: {fileID: -2626096344235361229, guid: aacc381b1e3f1e3479b58734ae6da6ca, type: 3}
-  unlocked: 1
+  unlocked: 0

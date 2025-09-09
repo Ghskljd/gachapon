@@ -15,5 +15,5 @@ MonoBehaviour:
   ID: d349be8c-33a4-47c2-bc67-c881a0993288
   rarity: 0
   Name: Common character
-  sprite: {fileID: 0}
+  sprite: {fileID: -2626096344235361229, guid: aacc381b1e3f1e3479b58734ae6da6ca, type: 3}
   unlocked: 1

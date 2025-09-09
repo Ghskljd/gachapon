@@ -16,4 +16,4 @@ MonoBehaviour:
   rarity: 2
   Name: Rare Character
   sprite: {fileID: 0}
-  unlocked: 1
+  unlocked: 0
