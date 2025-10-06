@@ -1,30 +1,8 @@
 using System;
 using UnityEngine;
 
-public class Movement : BuildingButtons
+public class Movement : MonoBehaviour
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void OnDestroy()
-    {
-        if (GameManager.Instance == null) return;
-        base.OnDestroy();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnMouseDrag()
     {
         float x = Mathf.Clamp(Input.mousePosition.x, 0, Screen.width);

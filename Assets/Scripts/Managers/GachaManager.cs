@@ -4,25 +4,35 @@ using UnityEngine;
 
 public class GachaManager : MonoBehaviour
 {
-    [SerializeField]
-    private List<GachaPool> GachaBanners;
-    private int indexOfGachaBanners;
-    private GachaPool currentGachaPool;
+    public static GachaManager Instance { get; private set; }
 
-    public event EventHandler<PulledCharacterArgs> PulledCharacter;
+    [SerializeField]
+    private List<GachaPool> GachaBanners; //ALL OF THE GACHA BANNERS CREATED
+    private int indexOfGachaBanners; //THE INDEX OF A GACHA BANNER
+    private GachaPool currentGachaPool; //WHICH GACHA BANNER WE ARE ON
 
     void Awake()
     {
+        if(Instance != null)
+        {
+            Debug.LogError("Error: More than one GachaManager");
+        }
+        else
+        {
+            Instance = this;
+        }
+        //Choose a random gacha banner
         indexOfGachaBanners = UnityEngine.Random.Range(0, GachaBanners.Count);
+        //Courotine to switch banners every so often 
         InvokeRepeating("SwitchBanners", 0f, 5f * 60f * 60f);
     }
 
     void Start()
     {
-        GameManager.Instance.PullClicked += OnPullClicked;
-        PulledCharacter += GameManager.Instance.OnCharacterPulled;
+
     }
 
+    //METHOD TO SWITCH BANNERS 
     private void SwitchBanners()
     {
         Debug.Log("switching banners");
@@ -30,72 +40,70 @@ public class GachaManager : MonoBehaviour
         currentGachaPool = GachaBanners[indexOfGachaBanners];
     }
 
-    private void OnPullClicked(object sender, System.EventArgs e)
+    //EVENT METHOD TO GET CALLED WHEN PULL IS CLICKED
+    public List<Characters_SO> OnPullClicked(int pulls)
     {
-        int randomNum = UnityEngine.Random.Range(1, 101);
-
-        switch (randomNum)
+        List<Characters_SO> pulledCharacters = new List<Characters_SO>();
+        for (int i = 0; i < pulls; i++)
         {
-            default:
-            case >= 1 and < 61:
-                CommonPulled();
-                break;
-            case >= 61 and < 91:
-                UncommonPulled();
-                break;
-            case >= 91 and < 98:
-                RarePulled();
-                break;
-            case >= 98 and < 100:
-                UltraRarePulled();
-                break;
-            case 100:
-                UURPulled();
-                break;
+            int randomNum = UnityEngine.Random.Range(1, 101);
+            switch (randomNum)
+            {
+                default:
+                case >= 1 and < 61:
+                    pulledCharacters.Add(CommonPulled());
+                    break;
+                case >= 61 and < 91:
+                    pulledCharacters.Add(UncommonPulled());
+                    break;
+                case >= 91 and < 98:
+                    pulledCharacters.Add(RarePulled());
+                    break;
+                case >= 98 and < 100:
+                    pulledCharacters.Add(UltraRarePulled());
+                    break;
+                case 100:
+                    pulledCharacters.Add(UURPulled());
+                    break;
+            }
         }
+
+        return pulledCharacters;
     }
 
-    private void CommonPulled()
+    private Characters_SO CommonPulled()
     {
         int randomNum = UnityEngine.Random.Range(0, currentGachaPool.Common_Characters_SOs.Count);
 
-        PulledCharacter?.Invoke(this, new PulledCharacterArgs
-        {
-            pulledCharacter = currentGachaPool.Common_Characters_SOs[randomNum]
-        });
+        return currentGachaPool.Common_Characters_SOs[randomNum];
+
     }
 
-    private void UncommonPulled()
+    private Characters_SO UncommonPulled()
     {
         int randomNum = UnityEngine.Random.Range(0, currentGachaPool.Uncommon_Characters_SOs.Count);
 
-        PulledCharacter?.Invoke(this, new PulledCharacterArgs
-        {
-            pulledCharacter = currentGachaPool.Uncommon_Characters_SOs[randomNum]
-        });
+        return currentGachaPool.Uncommon_Characters_SOs[randomNum];
+
     }
 
-    private void RarePulled()
+    private Characters_SO RarePulled()
     {
         int randomNum = UnityEngine.Random.Range(0, currentGachaPool.Rare_Characters_SOs.Count);
 
-        PulledCharacter?.Invoke(this, new PulledCharacterArgs
-        {
-            pulledCharacter = currentGachaPool.Rare_Characters_SOs[randomNum]
-        });
+        return currentGachaPool.Rare_Characters_SOs[randomNum];
+
     }
 
-    private void UltraRarePulled()
+    private Characters_SO UltraRarePulled()
     {
         int randomNum = UnityEngine.Random.Range(0, currentGachaPool.Ultra_Rare_Characters_SOs.Count);
 
-        PulledCharacter?.Invoke(this, new PulledCharacterArgs
-        {
-            pulledCharacter = currentGachaPool.Ultra_Rare_Characters_SOs[randomNum]
-        });
+        return currentGachaPool.Ultra_Rare_Characters_SOs[randomNum];
+
     }
 
-    private void UURPulled()
+    private Characters_SO UURPulled()
     {
         int randomNum = UnityEngine.Random.Range(0, 2);
         switch (randomNum)
@@ -103,31 +111,16 @@ public class GachaManager : MonoBehaviour
             default:
             case 0:
                 int randomRangeUnicorn = UnityEngine.Random.Range(0, currentGachaPool.Unicorn_Rare_Characters_SOs.Count);
-                PulledCharacter?.Invoke(this, new PulledCharacterArgs
-                {
-                    pulledCharacter = currentGachaPool.Unicorn_Rare_Characters_SOs[randomRangeUnicorn]
-                });
-                break;
+                return currentGachaPool.Unicorn_Rare_Characters_SOs[randomRangeUnicorn];
+
             case 1:
                 int randomRangeBurnt = UnityEngine.Random.Range(0, currentGachaPool.Burnt_Rare_Characters_SOs.Count);
-                PulledCharacter?.Invoke(this, new PulledCharacterArgs
-                {
-                    pulledCharacter = currentGachaPool.Burnt_Rare_Characters_SOs[randomRangeBurnt]
-                });
-                break;
+                return currentGachaPool.Burnt_Rare_Characters_SOs[randomRangeBurnt];
         }
     }
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.PullClicked -= OnPullClicked;
-            PulledCharacter -= GameManager.Instance.OnCharacterPulled;
-        }
     }
 }
-public class PulledCharacterArgs : EventArgs
-{
-    public Characters_SO pulledCharacter;
-}
+

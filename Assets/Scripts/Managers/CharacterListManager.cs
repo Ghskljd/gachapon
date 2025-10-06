@@ -62,10 +62,6 @@ public class CharacterListManager : MonoBehaviour
     public void AddToPlayerCollection(Characters_SO characters_SO)
     {
         PlayerCollection[characters_SO]++;
-        if (!characters_SO.unlocked)
-        {
-            characters_SO.unlocked = true;
-        }
     }
 
     public void RemoveFromPlayerCollection(Characters_SO characters_SO)

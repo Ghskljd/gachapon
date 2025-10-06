@@ -30,12 +30,14 @@ public class CurrencyManager : MonoBehaviour
         currency += rate;
     }
 
-    public void RemoveFromCurrency(int rate)
+    public bool RemoveFromCurrency(int rate)
     {
         if (currency >= rate)
         {
             currency -= rate;
+            return true;
         }
+        return false;
     }
 
     public void OnApplicationQuit()

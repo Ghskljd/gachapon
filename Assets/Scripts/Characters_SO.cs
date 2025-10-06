@@ -7,7 +7,6 @@ public class Characters_SO : BaseScriptableObject, IComparable<Characters_SO>
     public Rarity rarity;
     public string Name;
     public Sprite sprite;
-    public bool unlocked;
 
     public int CompareTo(Characters_SO other)
     {

@@ -15,5 +15,4 @@ MonoBehaviour:
   ID: bfb746ac-bbb0-401f-87f1-247fd960860a
   rarity: 2
   Name: Rare Character
-  sprite: {fileID: 0}
-  unlocked: 0
+  sprite: {fileID: -1364501495017296856, guid: 91697f7fa1c65e942b9aeb65635f7be4, type: 3}
