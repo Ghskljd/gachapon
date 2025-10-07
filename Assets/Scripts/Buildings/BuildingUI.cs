@@ -30,6 +30,10 @@ public class BuildingUI : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(active);
+            if (child.gameObject.name == "Frame")
+            {
+                child.gameObject.SetActive(true);
+            }
         }
     }
 }

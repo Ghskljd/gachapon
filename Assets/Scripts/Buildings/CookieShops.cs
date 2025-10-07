@@ -9,12 +9,15 @@ public class CookieShops : MonoBehaviour
     private float remainingTime = 300f;
     private int rate = 1;
     private Characters_SO cookie;
-    public event EventHandler CookieAssigned;
+    private Frame frame;
+    public event EventHandler<CookieAssignedArg> CookieAssigned;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        frame = GetComponentInChildren<Frame>();
         CharacterListManager.Instance.CharacterListManagerApplicationQuit += ApplicationQuit;
         CookieAssigned += UIManager.Instance.OnWindowChange;
+        CookieAssigned += frame.OnCookieAssigned;
         StartCoroutine(RunTimer());
     }
 
@@ -69,7 +72,10 @@ public class CookieShops : MonoBehaviour
         }
 
         remainingTime -= reduceTime;
-        CookieAssigned?.Invoke(this, EventArgs.Empty);
+        CookieAssigned?.Invoke(this, new CookieAssignedArg
+        {
+            characterID = characters_SO.ID
+        });
         Debug.Log("set this shop with " + cookie.name);
         return true;
     }
@@ -92,4 +98,9 @@ public class CookieShops : MonoBehaviour
         CharacterListManager.Instance.CharacterListManagerApplicationQuit -= ApplicationQuit;
         RemoveCookie();
     }
+}
+
+public class CookieAssignedArg : EventArgs
+{
+    public string characterID;
 }
