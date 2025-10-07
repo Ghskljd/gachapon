@@ -3,15 +3,15 @@ using UnityEngine;
 public class PullOneButton : BuildingButtonsUI
 {
     [SerializeField]
-    private const int COST = 150;
+    private int COST = 150;
     protected override void Awake()
     {
         base.Awake();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
-
+        base.Start();
     }
 
     // Update is called once per frame
@@ -20,8 +20,9 @@ public class PullOneButton : BuildingButtonsUI
 
     }
 
-    void OnMouseDown()
+    protected override void OnMouseDown()
     {
+        base.OnMouseDown();
         GameManager.Instance.OnPullClicked(COST, 1);
     }
 }

@@ -1,15 +1,17 @@
+using System;
 using UnityEngine;
 
 public class BuildingButtonsUI : MonoBehaviour
 {
+    public event EventHandler OnButtonClicked;
     protected virtual void Awake()
     {
         gameObject.SetActive(false);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
-
+        OnButtonClicked += UIManager.Instance.OnWindowChange;
     }
 
     // Update is called once per frame
@@ -17,6 +19,9 @@ public class BuildingButtonsUI : MonoBehaviour
     {
 
     }
-    
-    
+
+    protected virtual void OnMouseDown()
+    {
+        OnButtonClicked?.Invoke(this, EventArgs.Empty);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class CharacterListManager : MonoBehaviour
     [SerializeField]
     private List<Characters_SO> AllCharacters_SO;
     public Dictionary<Characters_SO, int> PlayerCollection { get; private set; }
+    public event EventHandler CharacterListManagerApplicationQuit;
 
     void Awake()
     {
@@ -40,6 +42,7 @@ public class CharacterListManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
+        CharacterListManagerApplicationQuit?.Invoke(this, EventArgs.Empty);
         SaveSystem.SaveCharacters(PlayerCollection);
     }
 
@@ -64,11 +67,14 @@ public class CharacterListManager : MonoBehaviour
         PlayerCollection[characters_SO]++;
     }
 
-    public void RemoveFromPlayerCollection(Characters_SO characters_SO)
+    public bool RemoveFromPlayerCollection(Characters_SO characters_SO)
     {
         if (PlayerCollection[characters_SO] > 0)
         {
             PlayerCollection[characters_SO]--;
+            return true;
         }
+
+        return false;
     }
 }

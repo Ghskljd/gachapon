@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 
@@ -35,6 +36,17 @@ public class GameManager : MonoBehaviour
         foreach (Characters_SO character in pulledCharacters)
         {
             CharacterListManager.Instance.AddToPlayerCollection(character);
+        }
+    }
+
+    public void OnAssignCharacter(string characterID, CookieShops cookieShop)
+    {
+        if (cookieShop == null) return;
+
+        Characters_SO characters_SO = CharacterListManager.Instance.GetCharacterByID(characterID);
+        if (cookieShop.SetCookie(characters_SO))
+        {
+            CharacterListManager.Instance.RemoveFromPlayerCollection(characters_SO);
         }
     }
 }

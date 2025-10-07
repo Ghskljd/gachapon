@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,9 +9,12 @@ public class CookieShops : MonoBehaviour
     private float remainingTime = 300f;
     private int rate = 1;
     private Characters_SO cookie;
+    public event EventHandler CookieAssigned;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        CharacterListManager.Instance.CharacterListManagerApplicationQuit += ApplicationQuit;
+        CookieAssigned += UIManager.Instance.OnWindowChange;
         StartCoroutine(RunTimer());
     }
 
@@ -42,9 +46,9 @@ public class CookieShops : MonoBehaviour
         }
     }
 
-    public void SetCookie(Characters_SO characters_SO)
+    public bool SetCookie(Characters_SO characters_SO)
     {
-        if (cookie != null) return;
+        if (cookie != null) return false;
         cookie = characters_SO;
         switch (cookie.rarity)
         {
@@ -65,10 +69,14 @@ public class CookieShops : MonoBehaviour
         }
 
         remainingTime -= reduceTime;
+        CookieAssigned?.Invoke(this, EventArgs.Empty);
+        Debug.Log("set this shop with " + cookie.name);
+        return true;
     }
 
     public void RemoveCookie()
     {
+        if(cookie != null) CharacterListManager.Instance.AddToPlayerCollection(cookie);
         cookie = null;
         remainingTime += reduceTime;
         reduceTime = 0f;
@@ -77,5 +85,11 @@ public class CookieShops : MonoBehaviour
     private void AddCurrency()
     {
         CurrencyManager.Instance.AddToCurrency(rate);
+    }
+
+    private void ApplicationQuit(object sender, EventArgs e)
+    {
+        CharacterListManager.Instance.CharacterListManagerApplicationQuit -= ApplicationQuit;
+        RemoveCookie();
     }
 }

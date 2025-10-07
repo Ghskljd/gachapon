@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterMenu : MonoBehaviour
+public class CharacterMenu : WindowUI
 {
     [SerializeField]
     private Transform CharacterDisplayUIPrefab;
     [SerializeField]
     private Transform ContentArea;
+    private CookieShops currentCookieShop;
     void Awake()
     {
         gameObject.SetActive(false);
@@ -42,22 +44,31 @@ public class CharacterMenu : MonoBehaviour
 
             UnityEngine.UI.Image imageSprite = CreatedCharacterDisplay.GetComponent<UnityEngine.UI.Image>();
             TMP_Text text = CreatedCharacterDisplay.GetComponentInChildren<TMP_Text>();
+            CharacterDisplay characterDisplay = CreatedCharacterDisplay.GetComponent<CharacterDisplay>();
 
             imageSprite.sprite = character.sprite;
             text.text = Characters[character].ToString();
+            characterDisplay.setCharacter_so(character);
+            characterDisplay.setCookieShop(currentCookieShop);
 
             CreatedCharacterDisplay.transform.SetParent(ContentArea);
             CreatedCharacterDisplay.transform.SetSiblingIndex(i);
         }
     }
 
-    public void Exit()
+    public override void Exit()
     {
         foreach (Transform child in ContentArea.transform)
         {
             Destroy(child.gameObject);
         }
 
-        gameObject.SetActive(false);
+        currentCookieShop = null;
+        base.Exit();
+    }
+
+    public void setCurrentCookieShop(CookieShops shop)
+    {
+        currentCookieShop = shop;
     }
 }
