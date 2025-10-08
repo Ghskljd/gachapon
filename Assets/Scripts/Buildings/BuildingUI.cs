@@ -29,11 +29,12 @@ public class BuildingUI : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(active);
-            if (child.gameObject.name == "Frame")
+            if (child.gameObject.layer == LayerMask.NameToLayer("Ignore Hover"))
             {
                 child.gameObject.SetActive(true);
+                continue;
             }
+            child.gameObject.SetActive(active);
         }
     }
 }

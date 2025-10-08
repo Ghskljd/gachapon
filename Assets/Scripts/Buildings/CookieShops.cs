@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CookieShops : MonoBehaviour
 {
-    private float originalTime = 300f;
-    private float reduceTime = 0f;
-    private float remainingTime = 300f;
+    public float originalTime { get; private set; } = 50f;
+    public float reduceTime { get;  private set; } = 0;
+    public float remainingTime { get; private set; } = 50f;
     private int rate = 1;
     private Characters_SO cookie;
     private Frame frame;
