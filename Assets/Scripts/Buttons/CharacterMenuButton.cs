@@ -18,6 +18,8 @@ public class CharacterMenuButton : BuildingButtonsUI
         {
             cookieShops = transform.parent.GetComponent<CookieShops>();
         }
+
+        CharacterMenuWindow = GameManager.Instance.CharacterMenu;
     }
 
     // Update is called once per frame

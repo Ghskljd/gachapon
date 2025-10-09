@@ -8,10 +8,6 @@ using UnityEngine.UI;
 
 public class CharacterMenu : WindowUI
 {
-    [SerializeField]
-    private Transform CharacterDisplayUIPrefab;
-    [SerializeField]
-    private Transform ContentArea;
     private CookieShops currentCookieShop;
     void Awake()
     {
@@ -40,7 +36,7 @@ public class CharacterMenu : WindowUI
         for (int i = 0; i < characters_SOs.Count; i++)
         {
             Characters_SO character = characters_SOs[i];
-            Transform CreatedCharacterDisplay = Instantiate(CharacterDisplayUIPrefab);
+            Transform CreatedCharacterDisplay = Instantiate(DisplayUIPrefab);
 
             UnityEngine.UI.Image imageSprite = CreatedCharacterDisplay.GetComponent<UnityEngine.UI.Image>();
             TMP_Text text = CreatedCharacterDisplay.GetComponentInChildren<TMP_Text>();

@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     //this textmeshpro variable is just for testing purpose
     [SerializeField]
     private TMP_Text textMeshProGui;
+    [SerializeField]
+    public Transform CharacterMenu;
+    [SerializeField]
+    public Transform BuildingMenu;
     public static GameManager Instance { get; private set; }
 
     void Awake()
@@ -44,9 +48,21 @@ public class GameManager : MonoBehaviour
         if (cookieShop == null) return;
 
         Characters_SO characters_SO = CharacterListManager.Instance.GetCharacterByID(characterID);
-        if (cookieShop.SetCookie(characters_SO))
+        if (CharacterListManager.Instance.RemoveFromPlayerCollection(characters_SO))
         {
-            CharacterListManager.Instance.RemoveFromPlayerCollection(characters_SO);
+            if (!cookieShop.SetCookie(characters_SO))
+            {
+                CharacterListManager.Instance.AddToPlayerCollection(characters_SO);
+            }
+        }
+    }
+
+    public void OnBuyBuilding(string buildingID)
+    {
+        BuildingSO buildingSO = BuildingsManager.Instance.GetBuildingByID(buildingID);
+        if (CurrencyManager.Instance.RemoveFromCurrency(buildingSO.cost))
+        {
+            BuildingsManager.Instance.InstantiateBuildings(buildingID);
         }
     }
 }
