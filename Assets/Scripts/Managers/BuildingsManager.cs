@@ -57,10 +57,10 @@ public class BuildingsManager : MonoBehaviour
         }
     }
 
-    public void InstantiateBuildings(string ID)
+    public bool InstantiateBuildings(string ID)
     {
         BuildingSO buildingSO = GetBuildingByID(ID);
-        if (PlayersBuildings.Contains(buildingSO)) return;
+        if (PlayersBuildings.Contains(buildingSO)) return false;
 
         Transform building = Instantiate(buildingSO.BuildingPrefab);
         CookieShops cookieShops = building.GetComponent<CookieShops>();
@@ -68,5 +68,7 @@ public class BuildingsManager : MonoBehaviour
         PlayersBuildings.Add(buildingSO);
 
         BuildingBought?.Invoke(this, EventArgs.Empty);
+
+        return true;
     }
 }

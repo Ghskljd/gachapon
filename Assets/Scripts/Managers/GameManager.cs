@@ -62,7 +62,10 @@ public class GameManager : MonoBehaviour
         BuildingSO buildingSO = BuildingsManager.Instance.GetBuildingByID(buildingID);
         if (CurrencyManager.Instance.RemoveFromCurrency(buildingSO.cost))
         {
-            BuildingsManager.Instance.InstantiateBuildings(buildingID);
+            if (!BuildingsManager.Instance.InstantiateBuildings(buildingID))
+            {
+                CurrencyManager.Instance.AddToCurrency(buildingSO.cost);
+            }
         }
     }
 }
