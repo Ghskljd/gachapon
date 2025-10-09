@@ -94,6 +94,55 @@ public static class SaveSystem
         }
     }
 
+    public static void SaveBuildings(List<BuildingSO> buildingSOs)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = getBuildingDataPath();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        List<string> IDs = new List<string>();
+
+        foreach (BuildingSO buildingSO in buildingSOs)
+        {
+            IDs.Add(buildingSO.ID);
+        }
+
+        formatter.Serialize(stream, IDs);
+        stream.Close();
+    }
+
+    public static List<BuildingSO> LoadBuildings()
+    {
+        string path = getBuildingDataPath();
+        if (File.Exists(path))
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            if (fileInfo.Length == 0)
+            {
+                Debug.Log("Save file is empty, returning empty list of buildings");
+                return null;
+            }
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            List<string> data = (List<string>)formatter.Deserialize(stream);
+            stream.Close();
+
+            List<BuildingSO> buildingSOs = new List<BuildingSO>();
+            foreach (string ID in data)
+            {
+                buildingSOs.Add(BuildingsManager.Instance.GetBuildingByID(ID));
+            }
+            return buildingSOs;
+        }
+        else
+        {
+            Debug.Log("Save file not found in " + path);
+            return null;
+        }
+    }
+
     private static string getCharacterDataPath()
     {
         return Application.persistentDataPath + "/characters.data";
@@ -102,5 +151,10 @@ public static class SaveSystem
     private static string getCurrencyDataPath()
     {
         return Application.persistentDataPath + "/currency.data";
+    }
+
+    private static string getBuildingDataPath()
+    {
+        return Application.persistentDataPath + "/buildings.data";
     }
 }

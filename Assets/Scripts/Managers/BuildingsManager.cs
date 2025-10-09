@@ -9,6 +9,7 @@ public class BuildingsManager : MonoBehaviour
 
     [SerializeField]
     public List<BuildingSO> AllBuildings_SO;
+    private List<BuildingSO> PlayersBuildings;
     public event EventHandler BuildingBought;
     public event EventHandler BuildingsManagerApplicationQuit;
     void Awake()
@@ -19,6 +20,9 @@ public class BuildingsManager : MonoBehaviour
         }
 
         Instance = this;
+
+        PlayersBuildings = SaveSystem.LoadBuildings() ?? new List<BuildingSO>();
+        InstantiateLoadedBuildings();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,17 +36,37 @@ public class BuildingsManager : MonoBehaviour
 
     }
 
+    public void OnApplicationQuit()
+    {
+        BuildingsManagerApplicationQuit?.Invoke(this, EventArgs.Empty);
+        SaveSystem.SaveBuildings(PlayersBuildings);
+    }
+
     public BuildingSO GetBuildingByID(string ID)
     {
         return AllBuildings_SO.Find(x => x.ID == ID);
     }
 
+    private void InstantiateLoadedBuildings()
+    {
+        foreach (BuildingSO buildingSO in PlayersBuildings)
+        {
+            Transform building = Instantiate(buildingSO.BuildingPrefab);
+            CookieShops cookieShops = building.GetComponent<CookieShops>();
+            cookieShops.setTimeRate(buildingSO.time, buildingSO.rate);
+        }
+    }
+
     public void InstantiateBuildings(string ID)
     {
         BuildingSO buildingSO = GetBuildingByID(ID);
+        if (PlayersBuildings.Contains(buildingSO)) return;
+
         Transform building = Instantiate(buildingSO.BuildingPrefab);
         CookieShops cookieShops = building.GetComponent<CookieShops>();
         cookieShops.setTimeRate(buildingSO.time, buildingSO.rate);
+        PlayersBuildings.Add(buildingSO);
+
         BuildingBought?.Invoke(this, EventArgs.Empty);
     }
 }
