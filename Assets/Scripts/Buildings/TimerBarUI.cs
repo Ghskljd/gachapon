@@ -27,7 +27,7 @@ public class TimerBarUI : MonoBehaviour
 
     private void UpdateBar()
     {
-        float t = cookieShops.remainingTime / cookieShops.originalTime;
+        float t = cookieShops.remainingTime / (cookieShops.originalTime - cookieShops.reduceTime);
         Vector3 scale = transform.localScale;
         scale.x = initialScaleX * t;
         transform.localScale = scale;

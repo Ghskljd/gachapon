@@ -31,7 +31,6 @@ public class BuildingUI : MonoBehaviour
         {
             if (child.gameObject.layer == LayerMask.NameToLayer("Ignore Hover"))
             {
-                child.gameObject.SetActive(true);
                 continue;
             }
             child.gameObject.SetActive(active);
