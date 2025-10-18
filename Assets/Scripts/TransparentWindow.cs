@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TransparentWindow : MonoBehaviour
 {
@@ -78,14 +79,16 @@ public class TransparentWindow : MonoBehaviour
     {
         UnityEngine.Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
-        SetClickthrough(Physics2D.OverlapPoint(worldPos) == null);
+
+        bool UIElement = EventSystem.current.IsPointerOverGameObject();
+        SetClickthrough(Physics2D.OverlapPoint(worldPos) == null, UIElement == false);
 
         EnsureTopMost();
     }
 
-    private void SetClickthrough(bool clickthrough)
+    private void SetClickthrough(bool clickthrough, bool clickthroughUI)
     {
-        if (clickthrough)
+        if (clickthrough && clickthroughUI)
         {
             SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
         }
